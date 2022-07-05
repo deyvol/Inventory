@@ -14,14 +14,9 @@ public class Character : ScriptableObject
     public bool isPlayable;         //Can be used by player
     public bool isCurrentActive;    //Is current active
 
-    [Header("Situation")]
-    public int currentRoomID;
-
     [Header("ScriptableObjects Items")]
     public Item item1;
     public Item item2;
     public Item item3;
-
-    [Header("Items")]
-    public List<Item> keys = new List<Item>();
+    
 }
