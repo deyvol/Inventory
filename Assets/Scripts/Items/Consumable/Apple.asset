@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 0
   isLock: 0
-  itemName: Apple
-  textDesciption: A simple apple for eat
+  itemName: Banana
+  textDesciption: A simple Banana for eat
   portrait: {fileID: 0}
   typeObject: Consumable
   isSaleable: 0

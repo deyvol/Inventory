@@ -10,9 +10,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Game Loop")]
     public bool isGameActive;
-
-    private int _currentPlayerIndex;
-    
+        
     //Singleton
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
