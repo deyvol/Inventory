@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: -734839336324292246}
   - component: {fileID: -3258873542270001583}
   - component: {fileID: 796286006610355805}
-  - component: {fileID: 5887720049480243181}
   m_Layer: 6
   m_Name: Explorer
   m_TagString: Player
@@ -259,19 +258,6 @@ MonoBehaviour:
   gravity: 9.8
   jumpForce: 4
   angularVelocity: 360
---- !u!114 &5887720049480243181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2828124051115431462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ca4eef35b4f4e4194047a922031194, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: c18400a1db853f04fbe8759e8c91817d, type: 2}
 --- !u!1 &3783358061300505074
 GameObject:
   m_ObjectHideFlags: 0
