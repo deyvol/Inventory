@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c7e572504ac4a4bb5e9afdd79fb1cc, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  typeId: 1
+  typeId: 5
   itemName: Sword
   textDescription: A Sword to kill somebody
   portrait: {fileID: 0}
   weight: 4
   price: 20
-  damagePerSecond: 5
+  dps: 6

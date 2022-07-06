@@ -2,15 +2,16 @@ using UnityEngine;
 
 public interface IConsumable
 {
-    public float health { get; set; }
-    public bool isTrash { get; set; }
-    public float healthDamage { get; set; }
-    public void Use();
+    float health { get; set; }
+    bool isTrash { get; set; }
+    float healthDamage { get; set; }
+    void Use();
 }
 
 
 public class Consumable : MonoBehaviour, IConsumable, IItem
 {
+    public int id { get; set; }
     public int typeId { get; set; }
     public string itemName { get; set; }
     public float weigth { get; set; }

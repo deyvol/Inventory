@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricPlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     public float gravity;
@@ -57,8 +57,6 @@ public class IsometricPlayerController : MonoBehaviour
 
             movementDirection = SetGravity(movementDirection);
 
-            movementDirection = Jump(movementDirection);
-
             _characterController.Move(movementDirection * Time.deltaTime);
         }        
     }
@@ -87,16 +85,6 @@ public class IsometricPlayerController : MonoBehaviour
             fallVelocity -= gravity * Time.deltaTime;
             movement.y = fallVelocity;
         }        
-        return movement;
-    }
-
-    private Vector3 Jump(Vector3 movement)
-    {
-        if (_characterController.isGrounded && Input.GetButtonDown("Jump"))
-        {
-            fallVelocity = jumpForce;
-            movement.y = fallVelocity;
-        }
         return movement;
     }
 }

@@ -9,6 +9,7 @@ public class SOConsumable : ScriptableObject
     public string itemName;
     public string textDescription;
     public Sprite portrait;
+    public Sprite portraitTrash;
 
     [Header("Properties")]
     public int weight;

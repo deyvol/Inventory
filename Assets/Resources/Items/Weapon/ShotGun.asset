@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c7e572504ac4a4bb5e9afdd79fb1cc, type: 3}
   m_Name: ShotGun
   m_EditorClassIdentifier: 
-  typeId: 0
-  itemName: 
-  textDescription: 
+  typeId: 4
+  itemName: ShotGun
+  textDescription: A ShotGun to kill somebody
   portrait: {fileID: 0}
-  weight: 0
-  price: 0
-  damagePerSecond: 0
+  resourceItemType: 3
+  weight: 4
+  price: 30
+  dps: 10

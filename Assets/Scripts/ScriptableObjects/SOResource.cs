@@ -13,7 +13,5 @@ public class SOResource : ScriptableObject
     [Header("Properties")]
     public int weight;
     public int price;
-    public float initialHealth;
-    public float healthDamage;
     public float priceDamage;
 }

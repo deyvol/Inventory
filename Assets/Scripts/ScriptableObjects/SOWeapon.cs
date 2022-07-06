@@ -11,7 +11,8 @@ public class SOWeapon : ScriptableObject
     public Sprite portrait;
 
     [Header("Properties")]
+    public int resourceItemType;
     public int weight;
     public int price;
-    public int damagePerSecond;
+    public int dps;
 }

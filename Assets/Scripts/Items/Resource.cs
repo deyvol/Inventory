@@ -2,20 +2,18 @@ using UnityEngine;
 
 public interface IResource
 {
-    public float price { get; set; }
-    public float health { get; set; }
-    public float healthDamage { get; set; }
+    float price { get; set; }
+    float priceDamage { get; set; }
 }
 
 
 public class Resource : MonoBehaviour, IResource, IItem
 {
+    public int id { get; set; }
     public int typeId { get; set; }
     public string itemName { get; set; }
     public float weigth { get; set; }
     public float price { get; set; }
-    public float health { get; set; }
-    public float healthDamage { get; set; }
     public float priceDamage { get; set; }
 
     public SOResource data;
@@ -25,8 +23,7 @@ public class Resource : MonoBehaviour, IResource, IItem
         typeId = data.typeId;
         itemName = data.itemName;
         weigth = data.weight;
-        health = data.initialHealth;
-        healthDamage = data.healthDamage;
+        price = data.price;
         priceDamage = data.priceDamage;
     }
 
