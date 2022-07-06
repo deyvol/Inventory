@@ -13,9 +13,11 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Items Inventory")]
     [SerializeField] private List<Consumable> inventoryConsumables = new List<Consumable>();
-    
+    [SerializeField] private List<Resource> inventoryResources = new List<Resource>();
+
 
     public Action<Consumable> onAddConsumable;
+    public Action<Resource> onAddResource;
 
     private float _elapsed = 0f;
     private float _interval = 1f;
@@ -51,6 +53,7 @@ public class InventoryManager : MonoBehaviour
     private void OnEnable()
     {
         onAddConsumable += AddConsumable;
+        onAddResource += AddResource;
     }
 
     private void OnDisable()
@@ -61,10 +64,19 @@ public class InventoryManager : MonoBehaviour
     public void AddConsumable(Consumable item)
     {
         Consumable newItem = new Consumable();
-        newItem.type = item.type;
+        newItem.data = item.data;
         newItem.InitConsumable();
         totalWeight += item.weigth;
         inventoryConsumables.Add(newItem);
+    }
+
+    public void AddResource(Resource item)
+    {
+        Resource newItem = new Resource();
+        newItem.data = item.data;
+        newItem.InitResource();
+        totalWeight += item.weigth;
+        inventoryResources.Add(newItem);    
     }
 
 
@@ -75,6 +87,12 @@ public class InventoryManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        DeteriorateConsumable();
+        DeteriorateResource();
+    }
+
+    void DeteriorateConsumable()
     {
         _elapsed += Time.deltaTime;
         if (_elapsed >= _interval)
@@ -90,10 +108,37 @@ public class InventoryManager : MonoBehaviour
                     {
                         consumable.health = 0;
                         consumable.isTrash = true;
-                        consumable.itemName = consumable.itemName + "(trash)";
-                        consumable.name = consumable.itemName;
-                        
+                        Debug.Log(consumable.itemName + " is Trash");
+                        //consumable.itemName = consumable.itemName + "(trash)";
+                        //consumable.name = consumable.itemName.ToString();
+
                     }
+                }
+            }
+        }
+    }
+
+    void DeteriorateResource()
+    {
+        _elapsed += Time.deltaTime;
+        if (_elapsed >= _interval)
+        {
+            _elapsed = 0f;
+            foreach (var resource in inventoryResources)
+            {
+
+                if (resource.health > 1)
+                {
+                    resource.health -= resource.healthDamage;
+                    resource.price -= resource.priceDamage;
+                } 
+                if (resource.health == 1)
+                {
+                    resource.health = 0;
+                    resource.price = 1;
+                    Debug.Log(resource.itemName + " is devaluated. The new price is " + resource.price);
+                    //resource.itemName = resource.itemName + "(trash)";
+                    //resource.name = resource.itemName.ToString();
                 }
             }
         }

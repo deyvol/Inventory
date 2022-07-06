@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     private const float defaultY = 0.20f;
     private const int defaultConsumablesCount = 5;
+    private const int defaultResourcesCount = 10;
 
 
     [Header ("Items")]
@@ -41,7 +42,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position = new Vector3(0, 0, 0);
         InitConsumables(defaultConsumablesCount);
+        InitResources(defaultResourcesCount);
         isGameActive = true;
     }
 
@@ -55,6 +58,20 @@ public class GameManager : MonoBehaviour
                 var pos = SetRandomAreaPoint(areaZone);
                 var obj = Instantiate(consumable, pos, Quaternion.identity, consumablesContainer.transform);
                 obj.GetComponent<Consumable>().InitConsumable();
+            }
+        }
+    }
+
+    private void InitResources(int count)
+    {
+        var areaZone = GetPlaneSize(gameZone);
+        foreach (var resources in Resources)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var pos = SetRandomAreaPoint(areaZone);
+                var obj = Instantiate(resources, pos, Quaternion.identity, resourcesContainer.transform);
+                obj.GetComponent<Resource>().InitResource();
             }
         }
     }

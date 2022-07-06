@@ -18,16 +18,16 @@ public class Consumable : MonoBehaviour, IConsumable, IItem
     public bool isTrash { get; set; }
     public float healthDamage { get; set; }
 
-    public SOConsumable type;
+    public SOConsumable data;
 
     public void InitConsumable()
     {
-        typeId = type.typeId;
-        itemName = type.itemName;
-        weigth = type.weight;
-        health = type.initialHealth;
+        typeId = data.typeId;
+        itemName = data.itemName;
+        weigth = data.weight;
+        health = data.initialHealth;
         isTrash = false;
-        healthDamage = type.healthDamage;
+        healthDamage = data.healthDamage;
     }
 
     public void Use()

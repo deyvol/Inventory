@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SOResource : ScriptableObject
 {
     [Header("Description")]
+    public int typeId;
     public string itemName;
     public string textDescription;
     public Sprite portrait;
@@ -14,4 +15,5 @@ public class SOResource : ScriptableObject
     public int price;
     public float initialHealth;
     public float healthDamage;
+    public float priceDamage;
 }

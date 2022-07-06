@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c27caf1308c38249970d47df2d653e0, type: 3}
-  m_Name: Bullet
+  m_Script: {fileID: 11500000, guid: 67c7e572504ac4a4bb5e9afdd79fb1cc, type: 3}
+  m_Name: ShotGun
   m_EditorClassIdentifier: 
-  typeId: 3
-  itemName: Bullet
-  textDescription: Ammunition for gun
+  typeId: 0
+  itemName: 
+  textDescription: 
   portrait: {fileID: 0}
-  weight: 1
-  price: 10
-  initialHealth: 100
-  healthDamage: 1
-  priceDamage: 0.01
+  weight: 0
+  price: 0
+  damagePerSecond: 0
