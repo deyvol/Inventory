@@ -22,6 +22,9 @@ public class Weapon : MonoBehaviour, IWeapon, IItem
     public SOWeapon data;
 
     private bool isProcessing = false;
+    private int isShotGun = 4;
+    private int isSword = 5;
+
 
     public void InitWeapon()
     {
@@ -33,6 +36,7 @@ public class Weapon : MonoBehaviour, IWeapon, IItem
         resourceItemType = data.resourceItemType;
     }
 
+    //Get a gun and put on inventory
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && !isProcessing)
@@ -46,26 +50,28 @@ public class Weapon : MonoBehaviour, IWeapon, IItem
         }
     }
 
+    //Returns false or true if you have a Weapon
     public bool HasWeapon(int typeId)
     {
-        if (typeId == 4)
+        if (typeId == isShotGun)
         {
             return GameManager.Instance.shotGun.activeInHierarchy;
         }
-        if (typeId == 5)
+        if (typeId == isSword)
         {
             return GameManager.Instance.sword.activeInHierarchy;
         }
         return false;
     }
 
+    //Show the gun on the player visual
     public void EnableWeapon(int typeId, bool state)
     {
-        if (typeId == 4)
+        if (typeId == isShotGun)
         {
             GameManager.Instance.shotGun.SetActive(state);
         }
-        if (typeId == 5)
+        if (typeId == isSword)
         {
             GameManager.Instance.sword.SetActive(state);
         }

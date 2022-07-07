@@ -7,6 +7,7 @@ using System.Linq;
 
 public class InventoryManager : MonoBehaviour
 {
+    //Set the max weight you can carry
     private const float maxWeight = 10f;
 
     [Header("General")]
@@ -21,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private List<Resource> inventoryResources = new List<Resource>();
     [SerializeField] private List<Weapon> inventoryWeapons = new List<Weapon>();
     
+    //Actions
     public Action<Consumable> onAddConsumable;
     public Action<Resource> onAddResource;
     public Action<Weapon> onAddWeapon;
@@ -58,6 +60,7 @@ public class InventoryManager : MonoBehaviour
         return maxWeight;
     }
 
+    //Actions
     private void OnEnable()
     {
         onAddConsumable += AddConsumable;
@@ -77,29 +80,31 @@ public class InventoryManager : MonoBehaviour
     {
         ids++;
 
-        //Memory Item
+        //Adding Item to Memory
         Consumable newItem = new Consumable();
         newItem.data = item.data;
         newItem.InitConsumable();
         newItem.id = ids;
-        SetWeight(item.weigth);
+        SetWeightGlobal(item.weigth);
         inventoryConsumables.Add(newItem);
 
-        //Visual Itemos
+        //Adding Item Visual on inventory
         var obj = Instantiate(visualItemPrefab, inventoryContent.transform);
         obj.GetComponent<VisualItem>().SetImage(item.data.portrait);
         obj.GetComponent<VisualItem>().SetImageTrash(item.data.portraitTrash);
         obj.GetComponent<VisualItem>().SetTypeId(item.data.typeId);
         obj.GetComponent<VisualItem>().SetId(ids);
+        obj.GetComponent<VisualItem>().SetWeight(item.data.weight);
     }
 
+    //Delete consumable for the inventory after use
     public void DeleteConsumable(int id)
     {
         for (int i = inventoryConsumables.Count-1; i >= 0; i--)
         {
             if (inventoryConsumables[i].id == id)
             {
-                SetWeight(-1 * inventoryConsumables[i].weigth);
+                SetWeightGlobal(-1 * inventoryConsumables[i].weigth);
                 inventoryConsumables.RemoveAt(i);
             }
         }
@@ -111,7 +116,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (inventoryConsumables[i].typeId == typeId)
             {
-                SetWeight(-1 * inventoryConsumables[i].weigth);
+                SetWeightGlobal(-1 * inventoryConsumables[i].weigth);
                 inventoryConsumables.RemoveAt(i);
             }
         }
@@ -160,19 +165,21 @@ public class InventoryManager : MonoBehaviour
     {
         ids++;
 
+        //Adding Item to Memory
         Resource newItem = new Resource();
         newItem.data = item.data;
         newItem.InitResource();
         newItem.id = ids;
-        SetWeight(item.weigth);
+        SetWeightGlobal(item.weigth);
         inventoryResources.Add(newItem);
 
-        //Visual Items
+        //Adding Item Visual on inventory
         var obj = Instantiate(visualItemPrefab, inventoryContent.transform);
         obj.GetComponent<VisualItem>().SetImage(item.data.portrait);
         obj.GetComponent<VisualItem>().SetTypeId(item.data.typeId);
         obj.GetComponent<VisualItem>().SetPrice(item.data.price);
         obj.GetComponent<VisualItem>().SetId(ids);
+        obj.GetComponent<VisualItem>().SetWeight(item.data.weight);
     }
 
     public int GetCountResourceByType(int type)
@@ -200,13 +207,14 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    //Delete resource for the inventory after use
     public void DeleteResource(int id)
     {
         for (int i = inventoryResources.Count - 1; i >= 0; i--)
         {
             if (inventoryResources[i].id == id)
             {
-                SetWeight(-1 * inventoryResources[i].weigth);
+                SetWeightGlobal(-1 * inventoryResources[i].weigth);
                 inventoryResources.RemoveAt(i);
             }
         }
@@ -217,20 +225,22 @@ public class InventoryManager : MonoBehaviour
     {
         ids++;
 
-        //Memory item
+        //Adding Item to Memory
         Weapon newItem = new Weapon();
         newItem.data = item.data;
         newItem.InitWeapon();
         newItem.id = ids;
-        SetWeight(item.weigth);
+        SetWeightGlobal(item.weigth);
         inventoryWeapons.Add(newItem);
 
-        //Visual Items
+        //Adding Item Visual on inventory
         var obj = Instantiate(visualItemPrefab, inventoryContent.transform);
         obj.GetComponent<VisualItem>().SetImage(item.data.portrait);
         obj.GetComponent<VisualItem>().SetTypeId(item.data.typeId);
         obj.GetComponent<VisualItem>().SetPrice(item.data.price);
         obj.GetComponent<VisualItem>().SetId(ids);
+        obj.GetComponent<VisualItem>().SetWeight(item.data.weight);
+        obj.GetComponent<VisualItem>().SetDPS(item.data.dps);
         newItem.EnableWeapon(item.typeId, true);
     }
 
@@ -260,7 +270,7 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    //VIRTUAL ITEM
+    //Get a visual item from inventory
     public VisualItem GetVisualItem(int id)
     {
         foreach (Transform child in inventoryContent.transform)
@@ -273,6 +283,7 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    //Destroy a visual item from inventory
     public void DestroyVisualItem(int id)
     {
         foreach (Transform child in inventoryContent.transform)
@@ -284,6 +295,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //Destroy all visual item from inventory by type
     public void DestroyAllVisualItem(int typeId)
     {
         foreach (Transform child in inventoryContent.transform)
@@ -297,17 +309,17 @@ public class InventoryManager : MonoBehaviour
 
     //WEIGHT
 
-    private void SetWeight(float weight)
+    //Get total Weight and show on inventory
+    private void SetWeightGlobal(float weight)
     {
         totalWeight += weight;
         visualTotalWeight.text = totalWeight.ToString();
-        //var visualItem = GetVisualItem(id);
-        //visualItem.SetWeight(visualItem.);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Deteriorate of Consumables and Resources
         _elapsed += Time.deltaTime;
         if (_elapsed >= _interval)
         {
@@ -317,6 +329,7 @@ public class InventoryManager : MonoBehaviour
         }   
     }
 
+    //Deteriorate consumable by healthDamage var
     void DeteriorateConsumable()
     {
         foreach (var consumable in inventoryConsumables)
@@ -339,6 +352,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //Deteriorate resource by healthDamage var
     void DeteriorateResource()
     {
         foreach (var resource in inventoryResources)

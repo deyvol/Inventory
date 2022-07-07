@@ -62,6 +62,19 @@ public class VisualItem : MonoBehaviour
         return itemHealth;
     }
 
+    //Show the DPS
+    public void SetDPS(int damage)
+    {
+        itemDps = damage;
+        dpsCircle.SetActive(true);
+        dpsText.text = Mathf.RoundToInt(damage).ToString();
+    }
+
+    public float GetDPS()
+    {
+        return itemDps;
+    }
+
     public void SetImage(Sprite image)
     {
         portrait.sprite = image;

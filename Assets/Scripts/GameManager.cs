@@ -65,13 +65,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        //Set the player in the center of the plane
         GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position = new Vector3(0, 0, 0);
+        //Init of the items
         InitConsumables(defaultConsumablesCount);
         InitResources(defaultResourcesCount);
         InitWeapons(defaultWeaponsCount);
+
         isGameActive = true;
     }
 
+    //Init of the consumables and Instantiation (5 items of each)
     private void InitConsumables(int count)
     {
         var areaZone = GetPlaneSize(gameZone);
@@ -86,6 +90,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Init of the recources and Instantiation (10 items)
     private void InitResources(int count)
     {
         var areaZone = GetPlaneSize(gameZone);
@@ -100,6 +105,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Init of the weapons and Instantiation (2 items of each)
     private void InitWeapons(int count)
     {
         var areaZone = GetPlaneSize(gameZone);
@@ -185,61 +191,75 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Function to delete the objects type Trash of inventory
     private void DeleteTrash()
     {
+        if (InventoryManager.Instance.GetCountConsumableByType(trashType) == 0)
+        {
+            messagesContainer.SetActive(true);
+            messages.text = "YOU DON'T HAVE TRASH TO DESTROY";
+            StartCoroutine(SendMessage());
+        }
         if (InventoryManager.Instance.GetCountConsumableByType(trashType) > 0)
         {
             InventoryManager.Instance.DeleteAllConsumable(trashType);
             InventoryManager.Instance.DestroyAllVisualItem(trashType);
             ShowMessage(trashType);
         }
-        else
-        {
-            messages.text = "YOU DON'T HAVE TRASH TO DESTROY";
-            StartCoroutine(SendMessage());
-        }
     }
 
+    //Function to use a weapon. If the weapon is type ShotGun, consumes a resource
     private void UseWeapon(int type)
-    {
+    {   //Search for any weapon on inventory
         if (InventoryManager.Instance.GetCountWeaponByType(type) > 0)
         {
+            //get a first weapon on inventory depends of type (Sword or ShotGun)
             var item = InventoryManager.Instance.GetFirstTypeWeapon(type);
+            //With this function, we know is a ShotGun or not
             if (item.resourceItemType > 0)
             {
+                //The item is a ShotGun, check for resources type Ammo 
+                if (InventoryManager.Instance.GetCountResourceByType(item.resourceItemType) == 0)
+                {
+                    messagesContainer.SetActive(true);
+                    messages.text = "YOU DON'T HAVE AMMO";
+                    StartCoroutine(SendMessage());
+                }
                 if (InventoryManager.Instance.GetCountResourceByType(item.resourceItemType) > 0)
                 {
+                    //You have AMMO, Shot and delete the resource on inventory
                     var itemResource = InventoryManager.Instance.GetFirstTypeResource(item.resourceItemType);
                     InventoryManager.Instance.DestroyVisualItem(itemResource.id);
                     InventoryManager.Instance.DeleteResource(itemResource.id);
                     ShowMessage(type);
-                } else
-                {
-                    messages.text = "YOU DON'T HAVE AMMO";
-                    StartCoroutine(SendMessage());
-                }
+                } 
+                
             } else
             {
+                //Here, the item is a Sword, message for the use of Sword
                 ShowMessage(type);
             }
         }
     }
 
+    //Function to delete (use) the objects type consumable of inventory
     void DeleteConsumable (int type)
     {
+        //Firts, check if you have consumables of any type
+        if (InventoryManager.Instance.GetCountConsumableByType(type) == 0)
+        {
+            messagesContainer.SetActive(true);
+            messages.text = "YOU DON'T HAVE CONSUMABLES";
+            StartCoroutine(SendMessage());
+        }
         if (InventoryManager.Instance.GetCountConsumableByType(type) > 0)
         {
+            //You have consumable, use and delete the consumable on inventory
             var item = InventoryManager.Instance.GetFirstTypeConsumable(type);
             InventoryManager.Instance.DestroyVisualItem(item.id);
             InventoryManager.Instance.DeleteConsumable(item.id);
             ShowMessage(type);
-        }
-        else
-        {
-            messages.text = "YOU DON'T HAVE CONSUMABLES";
-            StartCoroutine(SendMessage());
-        }
-        
+        }   
     }
     //Send Messages on screen
     void ShowMessage(int type)
@@ -273,7 +293,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-
+    //Wait 2 seconds to delete the displayed message
     IEnumerator SendMessage()
     {
         yield return new WaitForSeconds(2f);

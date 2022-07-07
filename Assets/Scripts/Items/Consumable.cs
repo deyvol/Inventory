@@ -5,7 +5,6 @@ public interface IConsumable
     float health { get; set; }
     bool isTrash { get; set; }
     float healthDamage { get; set; }
-    void Use();
 }
 
 
@@ -30,15 +29,8 @@ public class Consumable : MonoBehaviour, IConsumable, IItem
         isTrash = false;
         healthDamage = data.healthDamage;
     }
-
-    public void Use()
-    {
-        if (!isTrash)
-        {
-
-        }
-    }
-
+        
+    //Get a consumable and puts on inventory
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

@@ -33,6 +33,7 @@ public class Resource : MonoBehaviour, IResource, IItem
         healthDamage = data.healthDamage;
     }
 
+    //Get a resource and put on inventory
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
