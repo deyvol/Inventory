@@ -2,8 +2,10 @@ using UnityEngine;
 
 public interface IResource
 {
+    float health { get; set; }
     float price { get; set; }
     float priceDamage { get; set; }
+    float healthDamage { get; set; }
 }
 
 
@@ -14,7 +16,9 @@ public class Resource : MonoBehaviour, IResource, IItem
     public string itemName { get; set; }
     public float weigth { get; set; }
     public float price { get; set; }
+    public float health { get; set; }
     public float priceDamage { get; set; }
+    public float healthDamage { get; set; }
 
     public SOResource data;
 
@@ -24,7 +28,9 @@ public class Resource : MonoBehaviour, IResource, IItem
         itemName = data.itemName;
         weigth = data.weight;
         price = data.price;
+        health = data.health;
         priceDamage = data.priceDamage;
+        healthDamage = data.healthDamage;
     }
 
     private void OnTriggerEnter(Collider other)

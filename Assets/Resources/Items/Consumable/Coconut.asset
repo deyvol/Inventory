@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Coconut
   textDescription: 
   portrait: {fileID: 21300000, guid: f5f4342de0fbe764b94ecfc172f4479c, type: 3}
-  portraitTrash: {fileID: 21300000, guid: d34fc0228efe43945bba5df9aba8ad12, type: 3}
+  portraitTrash: {fileID: 21300000, guid: e976b7b77a813c04a911848cd0d4f63b, type: 3}
   weight: 3
   initialHealth: 100
   healthDamage: 2

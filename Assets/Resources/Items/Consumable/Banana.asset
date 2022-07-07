@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Banana
   textDescription: 
   portrait: {fileID: 21300000, guid: 61db875dca49e0d41a4c627d77e24ba2, type: 3}
-  portraitTrash: {fileID: 21300000, guid: cc00a8477d02f154da27446cf8e3002d, type: 3}
+  portraitTrash: {fileID: 21300000, guid: e976b7b77a813c04a911848cd0d4f63b, type: 3}
   weight: 2
   initialHealth: 100
   healthDamage: 2

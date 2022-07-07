@@ -15,7 +15,7 @@ MonoBehaviour:
   typeId: 4
   itemName: ShotGun
   textDescription: A ShotGun to kill somebody
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: cd802355c2448054dbc5835a69eecb12, type: 3}
   resourceItemType: 3
   weight: 4
   price: 30

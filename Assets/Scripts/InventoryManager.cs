@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     [Header("General")]
     public float totalCoins;
     public float totalWeight;
-    public Text weightText;
+    public Text visualTotalWeight;
     public GameObject visualItemPrefab;
     public GameObject inventoryContent;
 
@@ -300,7 +300,9 @@ public class InventoryManager : MonoBehaviour
     private void SetWeight(float weight)
     {
         totalWeight += weight;
-        weightText.text = totalWeight.ToString();
+        visualTotalWeight.text = totalWeight.ToString();
+        //var visualItem = GetVisualItem(id);
+        //visualItem.SetWeight(visualItem.);
     }
 
     // Update is called once per frame
@@ -323,14 +325,16 @@ public class InventoryManager : MonoBehaviour
             if (!consumable.isTrash)
             {
                 consumable.health -= consumable.healthDamage;
+                var visualItem = GetVisualItem(consumable.id);
                 if (consumable.health < 0)
                 {
                     consumable.health = 0;
                     consumable.isTrash = true;
                     consumable.typeId = GameManager.Instance.GetTrashType();
-                    var visualItem = GetVisualItem(consumable.id);
                     visualItem.ApplyImageTrash();
+                    visualItem.SetHealth(consumable.health);
                 }
+                visualItem.SetHealth(consumable.health);
             }
         }
     }
@@ -340,12 +344,19 @@ public class InventoryManager : MonoBehaviour
         foreach (var resource in inventoryResources)
         {
             resource.price -= resource.priceDamage;
+            resource.health -= resource.healthDamage;
             if (resource.price < 1)
             {
                 resource.price = 1;
             }
             var visualItem = GetVisualItem(resource.id);
             visualItem.SetPrice(resource.price);
+            if (resource.health < 0)
+            {
+                resource.health = 0;
+                visualItem.SetHealth(resource.health);
+            }
+            visualItem.SetHealth(resource.health);
         }
     }
 }

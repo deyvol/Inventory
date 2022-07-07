@@ -15,7 +15,8 @@ MonoBehaviour:
   typeId: 5
   itemName: Sword
   textDescription: A Sword to kill somebody
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 61256e664b35a054988e32947a3f5bfa, type: 3}
+  resourceItemType: 0
   weight: 4
   price: 20
   dps: 6

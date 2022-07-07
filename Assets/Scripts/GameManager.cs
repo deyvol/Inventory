@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,10 +28,14 @@ public class GameManager : MonoBehaviour
     public GameObject consumablesContainer;
     public GameObject resourcesContainer;
     public GameObject resourcesWeapons;
+    public GameObject messagesContainer;
+    public Text messages;
 
     [Header("General")]
     public bool isGameActive = false;
     public GameObject gameZone;
+    public GameObject inventory;
+    private bool activeInventory = false;
 
     [Header("Player")]
     public GameObject shotGun;
@@ -107,12 +113,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    //Assign a Vector3 for the item inside the plane, receiving the size of the plane
     private Vector3 SetRandomAreaPoint(Vector3 size)
     {
         return new Vector3(UnityEngine.Random.Range(-size.x/2, size.x/2),defaultY, UnityEngine.Random.Range(-size.z / 2, size.z / 2));
     }
-
+    //Get the size of the plane in vector3
     Vector3 GetPlaneSize(GameObject _plane)
     {
         Mesh planeMesh = _plane.GetComponent<MeshFilter>().mesh;
@@ -130,7 +136,7 @@ public class GameManager : MonoBehaviour
     }
 
     void LateUpdate()
-    {
+    {   //Keys active in the game
         if (isGameActive)
         {
             //Eat banana
@@ -168,6 +174,14 @@ public class GameManager : MonoBehaviour
                 DeleteTrash();
                 isProcessing = false;
             }
+            //Show inventory
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                isProcessing = true;
+                activeInventory = !activeInventory;
+                inventory.SetActive(activeInventory);
+                isProcessing = false;
+            }
         }
     }
 
@@ -181,7 +195,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("NO TIENES BASURA");
+            messages.text = "YOU DON'T HAVE TRASH TO DESTROY";
+            StartCoroutine(SendMessage());
         }
     }
 
@@ -200,7 +215,8 @@ public class GameManager : MonoBehaviour
                     ShowMessage(type);
                 } else
                 {
-                    Debug.Log("SENSE RECURSOS");
+                    messages.text = "YOU DON'T HAVE AMMO";
+                    StartCoroutine(SendMessage());
                 }
             } else
             {
@@ -220,31 +236,49 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("NO TIENES");
+            messages.text = "YOU DON'T HAVE CONSUMABLES";
+            StartCoroutine(SendMessage());
         }
         
     }
-
+    //Send Messages on screen
     void ShowMessage(int type)
     {
         switch (type)
         {
             case bananaType:
-                Debug.Log("HE MENJAT UNA BANANA");
+                messagesContainer.SetActive(true);
+                messages.text = "YOU EAT A BANANA";
+                StartCoroutine(SendMessage());
                 break;
             case coconutType:
-                Debug.Log("HE BEGUT UN COCO");
+                messagesContainer.SetActive(true);
+                messages.text = "YOU DRINK A COCO";
+                StartCoroutine(SendMessage());
                 break;
             case shotgunType:
-                Debug.Log("HE DISPARAT L'ESCOPETA");
+                messagesContainer.SetActive(true);
+                messages.text = "YOU SHOT A GUN";
+                StartCoroutine(SendMessage());
                 break;
             case swordType:
-                Debug.Log("HE UTILITZAT L'ESPASA");
+                messagesContainer.SetActive(true);
+                messages.text = "YOU USE THE SWORD";
+                StartCoroutine(SendMessage());
                 break;
             case trashType:
-                Debug.Log("HE BUIDAT LA BROSSA");
+                messagesContainer.SetActive(true);
+                messages.text = "EMPTY TRASH";
+                StartCoroutine(SendMessage());
                 break;
         }
+    }
+
+    IEnumerator SendMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        messagesContainer.SetActive(false);
+        messages.text = "";
     }
 
 }

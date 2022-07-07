@@ -7,22 +7,59 @@ public class VisualItem : MonoBehaviour
 {
     [SerializeField] private int id;
     [SerializeField] private int typeId;
-    [SerializeField] private float price;
+    [SerializeField] private float itemPrice;
+    [SerializeField] private float itemWeight;
+    [SerializeField] private float itemHealth;
+    [SerializeField] private float itemDps;
     [SerializeField] private Image portrait;
     [SerializeField] private Sprite portraitTrash;
     [SerializeField] private GameObject priceCircle;
+    [SerializeField] private GameObject weightCircle;
+    [SerializeField] private GameObject healthCircle;
+    [SerializeField] private GameObject dpsCircle;
     [SerializeField] private Text priceText;
+    [SerializeField] private Text weightText;
+    [SerializeField] private Text healthText;
+    [SerializeField] private Text dpsText;
 
+
+    //Show the price
     public void SetPrice(float cost)
     {
-        price = cost;
+        itemPrice = cost;
         priceCircle.SetActive(true);
         priceText.text = Mathf.RoundToInt(cost).ToString();
     }
-
+        
     public float GetPrice()
     {
-        return price;
+        return itemPrice;
+    }
+
+    //Show the weight
+    public void SetWeight(float weight)
+    {
+        itemWeight = weight;
+        weightCircle.SetActive(true);
+        weightText.text = Mathf.RoundToInt(itemWeight).ToString();
+    }
+
+    public float GetWeight()
+    {
+        return itemWeight;
+    }
+
+    //Show the health
+    public void SetHealth(float health)
+    {
+        itemHealth = health;
+        healthCircle.SetActive(true);
+        healthText.text = Mathf.RoundToInt(itemHealth).ToString();
+    }
+
+    public float GetHealth()
+    {
+        return itemHealth;
     }
 
     public void SetImage(Sprite image)
